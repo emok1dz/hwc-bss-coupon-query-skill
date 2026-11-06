@@ -1,0 +1,50 @@
+# 真实账号验收记录（2026-11-06T01:41Z，华为云中国站，只读）
+
+## R1 列表
+$ python3 scripts/coupon_query.py list
+（无记录）
+[退出码 0]
+
+## R2 JSON
+$ python3 scripts/coupon_query.py list --json
+{
+  "count": 0,
+  "coupons": []
+}
+[退出码 0]
+
+## R3 可用券
+$ python3 scripts/coupon_query.py list --status available
+（无记录）
+[退出码 0]
+
+## R4 到期
+$ python3 scripts/coupon_query.py expiring --days 365
+365 天内到期的可用代金券：0 张，合计余额 0.00 元
+（无记录）
+[退出码 0]
+
+## R5 使用率
+$ python3 scripts/coupon_query.py usage
+代金券总数：0 张
+总面额：0.00 元，已使用：0.00 元，余额：0.00 元
+使用率：-；已过期未用完的余额：0.00 元
+按状态：
+[退出码 0]
+
+## R6 单券（不存在的 ID）
+$ python3 scripts/coupon_query.py status NOT-EXIST-ID
+[NOT_FOUND] 未找到优惠券 NOT-EXIST-ID（已使用/过期/回收的券只保留 12 个月）
+[退出码 4]
+
+## R7 缺凭证
+$ env -u HUAWEICLOUD_SDK_AK -u HUAWEICLOUD_SDK_SK -u HW_ACCESS_KEY -u HW_SECRET_KEY python3 scripts/coupon_query.py list
+[MISSING_CONFIG] 缺少凭证：请设置环境变量 HUAWEICLOUD_SDK_AK 和 HUAWEICLOUD_SDK_SK
+提示：见 references/cli-installation-guide.md
+[退出码 3]
+
+## R8 参数错误
+$ python3 scripts/coupon_query.py expiring --days 0
+[INVALID_ARGUMENTS] --days 必须在 1~365 之间
+[退出码 2]
+
